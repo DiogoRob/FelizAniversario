@@ -9,23 +9,46 @@
 
   body {
     margin: 0;
-    padding: 40px 20px;
+    padding: 140px 20px 40px; /* padding-top aumentado para espaço da imagem */
     background: #fff7f0;
-    font-family: Arial, sans-serif; /* Texto normal com fonte limpa */
+    font-family: Arial, sans-serif;
     color: #5a3e36;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; /* alinhado ao topo */
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
     flex-direction: column;
   }
 
+  /* Container que posiciona o sticker */
+  .sticker-container {
+    position: relative;
+    width: 700px; /* mesmo max-width do container para alinhar */
+    max-width: 100%;
+    height: 100px; /* altura suficiente para a imagem */
+    pointer-events: none; /* para não atrapalhar cliques */
+    margin-bottom: 0; /* remove margem negativa para não cortar imagem */
+  }
+
+  /* A imagem do sticker */
+  .sticker-container img {
+    position: absolute;
+    bottom: -170px; /* ajusta verticalmente para 'sentar' em cima do quadro */
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 280px; /* ajuste o tamanho conforme precisar */
+    height: auto;
+    user-select: none;
+    pointer-events: auto;
+    z-index: 20;
+  }
+
   .container {
     background: #fff0e6;
     max-width: 700px;
-    padding: 40px 50px;
+    padding: 90px 50px 40px; /* padding-top para dar espaço ao sticker */
     border-radius: 15px;
     box-shadow: 0 8px 20px rgba(90, 62, 54, 0.2);
     line-height: 1.7;
@@ -36,7 +59,7 @@
   }
 
   h1 {
-    font-family: 'Great Vibes', cursive; /* Só o título em cursiva */
+    font-family: 'Great Vibes', cursive;
     font-size: 3.8rem;
     color: #b65c42;
     margin-bottom: 15px;
@@ -102,7 +125,7 @@
     border: none;
     border-radius: 30px;
     padding: 14px 36px;
-    font-family: Arial, sans-serif; /* Botão com fonte limpa */
+    font-family: Arial, sans-serif;
     font-size: 1.2rem;
     cursor: pointer;
     box-shadow: 0 5px 12px rgba(182, 92, 66, 0.7);
@@ -117,6 +140,10 @@
 </style>
 </head>
 <body>
+
+  <div class="sticker-container">
+    <img src="us.png" alt="Sticker nosso estilo Ghibli" />
+  </div>
 
   <div class="container">
     <h1>Para o meu grande amor</h1>
