@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Carta para meu grande amor</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Georgia&display=swap');
+
+  body {
+    margin: 0;
+    padding: 40px 20px;
+    background: #fff7f0;
+    font-family: 'Georgia', serif;
+    color: #5a3e36;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    flex-direction: column;
+  }
+
+  .container {
+    background: #fff0e6;
+    max-width: 700px;
+    padding: 40px 50px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(90, 62, 54, 0.2);
+    line-height: 1.7;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.8rem;
+    color: #b65c42;
+    margin-bottom: 15px;
+    text-align: center;
+    user-select: none;
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 1.3em;
+    white-space: pre-wrap; /* mantém quebras de linha */
+  }
+
+
+  /* Pequeno detalhe decorativo */
+  .container::before {
+    content: "❤";
+    font-size: 2.5rem;
+    color: #b65c42;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    user-select: none;
+  }
+
+  /* Animação das flores e corações caindo */
+
+  .falling {
+    position: fixed;
+    top: -50px;
+    font-size: 24px;
+    user-select: none;
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  @keyframes fall {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 0.8;
+    }
+    100% {
+      transform: translateY(110vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  /* Estilo do container do botão */
+
+  .map-link-container {
+    margin-top: 30px;
+    text-align: center;
+  }
+
+  .map-text {
+    font-style: italic;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    color: #7a573a;
+  }
+
+  .map-button {
+    background-color: #b65c42;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 36px;
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.6rem;
+    cursor: pointer;
+    box-shadow: 0 5px 12px rgba(182, 92, 66, 0.7);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    user-select: none;
+  }
+
+  .map-button:hover {
+    background-color: #9d4e38;
+    transform: scale(1.05);
+  }
+</style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Para o meu grande amor</h1>
+    <div id="text-content">
+      <!-- Texto será inserido aqui via JS -->
+    </div>
+
+    <div class="map-link-container">
+      <div class="map-text">
+        Como os astros se alinharem para acompanhar a perfeição do nosso primeiro beijo:
+      </div>
+      <button class="map-button" onclick="window.location.href='mapa.html'">Visualizar mapa</button>
+    </div>
+  </div>
+
+<script>
+  const texto = `Meu bem, hoje é um dia mais que especial na nossa vida, é o seu dia, e quero que saiba o quanto sou feliz de poder presenciar essa data tão especial ao seu lado.
+
+Queria que você soubesse o quanto mudou minha vida ter você ao meu lado, tenho um motivo muito grande para acordar feliz todo dia, sabendo que tenho a pessoa mais perfeita do mundo para compartilhar um sentimento ainda mais perfeito, eu tenho mais uma razão para alcançar os objetivos da minha vida, para compartilhar-los com você e saber que a cada dia que passa, ficamos mais próximos de quem almejamos ser, juntos.
+
+Nunca me canso de pensar nos dias que estávamos nos conhecendo, o frio na barriga que eu sentia antes de te ver, até mesmo antes de tomar a primeira atitude. Você mexeu comigo desde o primeiro instante em que te vi, e a cada descoberta que fiz sobre você, só me fez te amar ainda mais, o seu jeito doce e carinhoso, sua alegria que contagia e as coisas boas que você carrega por onde passa, falo por mim e por todas pessoas que são importantes na sua vida, você faz a diferença.
+
+Já estamos há um pouco mais de 7 meses juntos, e me sinto esperançoso para o que ainda temos a viver, carrego no meu peito a cada momento a certeza de que escolhi a pessoa certa, você é muito mais do que um dia eu imaginei merecer e quero que saiba disso todas as vezes que olhar pra mim, eu te amo e sempre vou te amar, você é a mulher da minha vida.`;
+
+  const container = document.getElementById('text-content');
+
+  // Vamos dividir o texto em parágrafos para o efeito typing ficar organizado
+  const paragraphs = texto.split('\n\n');
+
+  // Função para fazer o typing de um parágrafo
+  function typeParagraph(text, element, delay = 10) {
+    return new Promise(resolve => {
+      let i = 0;
+      element.textContent = '';
+      function typing() {
+        if(i < text.length) {
+          element.textContent += text.charAt(i);
+          i++;
+          setTimeout(typing, delay);
+        } else {
+          resolve();
+        }
+      }
+      typing();
+    });
+  }
+
+  async function typeAllParagraphs() {
+    for(let i = 0; i < paragraphs.length; i++) {
+      const p = document.createElement('p');
+      if(i === 0) p.style.fontWeight = '600'; // o primeiro parágrafo com negrito
+      container.appendChild(p);
+      await typeParagraph(paragraphs[i], p);
+    }
+  }
+
+  typeAllParagraphs();
+
+  // Função para criar elementos caindo (flores e corações)
+  const symbols = ['❀', '❁', '❃', '❇', '❤', '❥'];
+
+  function createFallingSymbol() {
+    const span = document.createElement('span');
+    span.classList.add('falling');
+    span.style.left = Math.random() * 100 + 'vw';
+    span.style.fontSize = (16 + Math.random() * 24) + 'px';
+    span.style.animationDuration = (8 + Math.random() * 7) + 's';
+    span.style.animationDelay = (Math.random() * 5) + 's';
+    span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    document.body.appendChild(span);
+
+    // Remove o elemento depois da animação para evitar acúmulo no DOM
+    setTimeout(() => {
+      span.remove();
+    }, (parseFloat(span.style.animationDuration) + parseFloat(span.style.animationDelay)) * 1000);
+  }
+
+  // Criar novos símbolos caindo a cada 500ms
+  setInterval(createFallingSymbol, 500);
+</script>
+
+</body>
+</html>
