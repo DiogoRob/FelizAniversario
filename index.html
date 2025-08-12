@@ -16,7 +16,6 @@
     align-items: center;
     font-family: 'Georgia', serif;
     color: #5a4431;
-    position: relative;
   }
 
   button {
@@ -32,8 +31,8 @@
     transition: all 0.3s ease;
     user-select: none;
     letter-spacing: 1px;
-    position: relative;
-    z-index: 2;
+    position: relative; /* necessário para o posicionamento absoluto da imagem dentro do botão */
+    overflow: visible; /* para imagem "sair" do botão */
   }
 
   button:hover {
@@ -52,37 +51,37 @@
     z-index: 0;
   }
 
-  /* Sticker da selfie */
+  /* Sticker da selfie dentro do botão */
   .sticker {
     position: absolute;
-    bottom: 120px; /* sobe 120px acima do botão */
+    bottom: 100%; /* exatamente em cima do botão */
     left: 50%;
-    transform: translateX(-50%) translateY(20px);
+    transform: translateX(-50%) translateY(-10px); /* centralizar horizontal e subir 10px para sair do botão */
     width: 160px;
-    pointer-events: none; /* para clicar só no botão */
+    pointer-events: none;
     opacity: 0;
     animation: fadeUp 0.8s ease forwards;
-    z-index: 1;
+    z-index: 10;
   }
 
   @keyframes fadeUp {
     from {
       opacity: 0;
-      transform: translateX(-50%) translateY(40px);
+      transform: translateX(-50%) translateY(10px);
     }
     to {
       opacity: 1;
-      transform: translateX(-50%) translateY(0);
+      transform: translateX(-50%) translateY(-10px);
     }
   }
-
 </style>
 </head>
 <body>
 
-  <button onclick="location.href='carta.html'">Para meu grande Amor</button>
-  <img src="selfie.png" alt="" class="sticker" />
+  <button onclick="location.href='carta.html'">
+    Para meu grande Amor
+    <img src="selfie.png" alt="" class="sticker" />
+  </button>
 
 </body>
 </html>
-
