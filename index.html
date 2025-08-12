@@ -16,6 +16,7 @@
     align-items: center;
     font-family: 'Georgia', serif;
     color: #5a4431;
+    position: relative;
   }
 
   button {
@@ -31,6 +32,8 @@
     transition: all 0.3s ease;
     user-select: none;
     letter-spacing: 1px;
+    position: relative;
+    z-index: 2;
   }
 
   button:hover {
@@ -48,11 +51,37 @@
     pointer-events: none;
     z-index: 0;
   }
+
+  /* Sticker da selfie */
+  .sticker {
+    position: absolute;
+    bottom: 120px; /* sobe 120px acima do botão */
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    width: 160px;
+    pointer-events: none; /* para clicar só no botão */
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+    z-index: 1;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+
 </style>
 </head>
 <body>
 
   <button onclick="location.href='carta.html'">Para meu grande Amor</button>
+  <img src="selfie.png" alt="Selfie nosso sticker" class="sticker" />
 
 </body>
 </html>
