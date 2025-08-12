@@ -46,7 +46,7 @@
     left: 0;
     user-select: none;
     -webkit-user-drag: none;
-    transform: translate(0px, 0px) scale(1.2); /* zoom proporcional */
+    transform: translate(0px, 0px) scale(1.2);
     transform-origin: center center;
   }
 
@@ -81,7 +81,7 @@
   let currentX = 0;
   let currentY = 0;
   let limits = { minX: 0, maxX: 0, minY: 0, maxY: 0 };
-  const zoom = 1.2; // zoom proporcional
+  const zoom = 1.2;
 
   function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
@@ -161,7 +161,6 @@
     limits = updateLimits();
   });
 
-  // Contador
   const contador = document.getElementById('contador');
   const dataInicial = new Date(2025, 1, 1, 0, 0, 0);
 
@@ -188,4 +187,3 @@
 
 </body>
 </html>
-
