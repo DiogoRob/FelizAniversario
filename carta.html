@@ -11,7 +11,7 @@
     margin: 0;
     padding: 40px 20px;
     background: #fff7f0;
-    font-family: 'Great Vibes', cursive;
+    font-family: Arial, sans-serif; /* Texto normal com fonte limpa */
     color: #5a3e36;
     display: flex;
     justify-content: center;
@@ -36,7 +36,7 @@
   }
 
   h1 {
-    font-family: 'Great Vibes', cursive;
+    font-family: 'Great Vibes', cursive; /* Só o título em cursiva */
     font-size: 3.8rem;
     color: #b65c42;
     margin-bottom: 15px;
@@ -47,11 +47,9 @@
   p {
     font-size: 1.2rem;
     margin-bottom: 1.3em;
-    white-space: pre-wrap; /* mantém quebras de linha */
+    white-space: pre-wrap;
   }
 
-
-  /* Pequeno detalhe decorativo */
   .container::before {
     content: "❤";
     font-size: 2.5rem;
@@ -61,8 +59,6 @@
     left: 20px;
     user-select: none;
   }
-
-  /* Animação das flores e corações caindo */
 
   .falling {
     position: fixed;
@@ -88,8 +84,6 @@
     }
   }
 
-  /* Estilo do container do botão */
-
   .map-link-container {
     margin-top: 30px;
     text-align: center;
@@ -108,8 +102,8 @@
     border: none;
     border-radius: 30px;
     padding: 14px 36px;
-    font-family: 'Great Vibes', cursive;
-    font-size: 1.6rem;
+    font-family: Arial, sans-serif; /* Botão com fonte limpa */
+    font-size: 1.2rem;
     cursor: pointer;
     box-shadow: 0 5px 12px rgba(182, 92, 66, 0.7);
     transition: background-color 0.3s ease, transform 0.2s ease;
@@ -126,9 +120,7 @@
 
   <div class="container">
     <h1>Para o meu grande amor</h1>
-    <div id="text-content">
-      <!-- Texto será inserido aqui via JS -->
-    </div>
+    <div id="text-content"></div>
 
     <div class="map-link-container">
       <div class="map-text">
@@ -148,11 +140,8 @@ Nunca me canso de pensar nos dias que estávamos nos conhecendo, o frio na barri
 Já estamos há um pouco mais de 7 meses juntos, e me sinto esperançoso para o que ainda temos a viver, carrego no meu peito a cada momento a certeza de que escolhi a pessoa certa, você é muito mais do que um dia eu imaginei merecer e quero que saiba disso todas as vezes que olhar pra mim, eu te amo e sempre vou te amar, você é a mulher da minha vida.`;
 
   const container = document.getElementById('text-content');
-
-  // Vamos dividir o texto em parágrafos para o efeito typing ficar organizado
   const paragraphs = texto.split('\n\n');
 
-  // Função para fazer o typing de um parágrafo
   function typeParagraph(text, element, delay = 10) {
     return new Promise(resolve => {
       let i = 0;
@@ -173,7 +162,7 @@ Já estamos há um pouco mais de 7 meses juntos, e me sinto esperançoso para o 
   async function typeAllParagraphs() {
     for(let i = 0; i < paragraphs.length; i++) {
       const p = document.createElement('p');
-      if(i === 0) p.style.fontWeight = '600'; // o primeiro parágrafo com negrito
+      if(i === 0) p.style.fontWeight = '600';
       container.appendChild(p);
       await typeParagraph(paragraphs[i], p);
     }
@@ -181,7 +170,6 @@ Já estamos há um pouco mais de 7 meses juntos, e me sinto esperançoso para o 
 
   typeAllParagraphs();
 
-  // Função para criar elementos caindo (flores e corações)
   const symbols = ['❀', '❁', '❃', '❇', '❤', '❥'];
 
   function createFallingSymbol() {
@@ -193,18 +181,13 @@ Já estamos há um pouco mais de 7 meses juntos, e me sinto esperançoso para o 
     span.style.animationDelay = (Math.random() * 5) + 's';
     span.textContent = symbols[Math.floor(Math.random() * symbols.length)];
     document.body.appendChild(span);
-
-    // Remove o elemento depois da animação para evitar acúmulo no DOM
     setTimeout(() => {
       span.remove();
     }, (parseFloat(span.style.animationDuration) + parseFloat(span.style.animationDelay)) * 1000);
   }
 
-  // Criar novos símbolos caindo a cada 500ms
   setInterval(createFallingSymbol, 500);
 </script>
 
 </body>
 </html>
-
-
