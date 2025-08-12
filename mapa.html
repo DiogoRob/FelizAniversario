@@ -7,24 +7,19 @@
 <style>
   body {
     margin: 0;
-    background-color: #000000;
+    background-color: #000;
     color: #ddd;
     font-family: 'Courier New', Courier, monospace;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    min-height: 100vh;
-    user-select: none;
     padding: 20px;
-    box-sizing: border-box;
   }
 
   h1 {
     margin-top: 20px;
     font-weight: normal;
-    font-size: 2.5rem;
-    margin-bottom: 30px;
+    font-size: 2rem;
     text-align: center;
     color: #eee;
   }
@@ -32,15 +27,14 @@
   .telescope-view {
     width: 90vw;
     max-width: 600px;
-    height: 600px;
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     overflow: hidden;
     border: 2px solid #888;
-    background-color: #111111;
-    touch-action: none;
+    background-color: #111;
     position: relative;
+    touch-action: none;
     cursor: grab;
-    box-shadow: 0 0 15px #555 inset;
   }
   .telescope-view:active {
     cursor: grabbing;
@@ -52,25 +46,19 @@
     left: 0;
     user-select: none;
     -webkit-user-drag: none;
-    width: auto;
-    height: 100%;
-    max-width: none;
-    transform: translateX(0) translateY(0);
-    transition: none !important;
-    will-change: transform;
-    filter: brightness(1.1);
+    transform: translate(0px, 0px) scale(1.2); /* zoom proporcional */
+    transform-origin: center center;
   }
 
-  /* Contador estilizado */
   #contador {
-    margin-top: 35px;
-    font-size: 1.4rem;
+    margin-top: 20px;
+    font-size: 1.2rem;
     color: #ccc;
-    white-space: nowrap;
+    text-align: center;
   }
 
   #contador strong {
-    color: #eee;
+    color: #fff;
   }
 </style>
 </head>
@@ -79,13 +67,12 @@
   <h1>Mapa Estelar do Nosso Primeiro Beijo</h1>
 
   <div class="telescope-view" id="telescope">
-    <img src="starmap.jpeg" alt="Mapa estelar do nosso primeiro beijo" class="draggable-image" id="draggableImage" />
+    <img src="./starmap.jpeg" alt="Mapa estelar do nosso primeiro beijo" class="draggable-image" id="draggableImage" />
   </div>
 
   <div id="contador">Carregando contador...</div>
 
 <script>
-  // Drag to pan da imagem dentro do círculo
   const telescope = document.getElementById('telescope');
   const img = document.getElementById('draggableImage');
 
@@ -93,24 +80,26 @@
   let startX, startY;
   let currentX = 0;
   let currentY = 0;
+  let limits = { minX: 0, maxX: 0, minY: 0, maxY: 0 };
+  const zoom = 1.2; // zoom proporcional
 
   function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
   }
 
   function updateLimits() {
-    const containerRect = telescope.getBoundingClientRect();
-    const imgRect = img.getBoundingClientRect();
+    const containerW = telescope.offsetWidth;
+    const containerH = telescope.offsetHeight;
+    const imgW = img.naturalWidth * zoom * (containerH / img.naturalHeight);
+    const imgH = containerH * zoom;
 
     return {
-      minX: containerRect.width - img.width,
+      minX: containerW - imgW,
       maxX: 0,
-      minY: containerRect.height - img.height,
+      minY: containerH - imgH,
       maxY: 0
     };
   }
-
-  let limits = updateLimits();
 
   function onPointerDown(e) {
     e.preventDefault();
@@ -132,7 +121,7 @@
     let nextX = clamp(currentX + deltaX, limits.minX, limits.maxX);
     let nextY = clamp(currentY + deltaY, limits.minY, limits.maxY);
 
-    img.style.transform = `translate(${nextX}px, ${nextY}px)`;
+    img.style.transform = `translate(${nextX}px, ${nextY}px) scale(${zoom})`;
   }
 
   function onPointerUp(e) {
@@ -155,7 +144,7 @@
     limits = updateLimits();
     currentX = clamp(currentX, limits.minX, limits.maxX);
     currentY = clamp(currentY, limits.minY, limits.maxY);
-    img.style.transform = `translate(${currentX}px, ${currentY}px)`;
+    img.style.transform = `translate(${currentX}px, ${currentY}px) scale(${zoom})`;
   });
 
   telescope.addEventListener('mousedown', onPointerDown);
@@ -168,32 +157,29 @@
   window.addEventListener('touchend', onPointerUp);
   window.addEventListener('touchcancel', onPointerUp);
 
+  img.addEventListener('load', () => {
+    limits = updateLimits();
+  });
+
   // Contador
-
   const contador = document.getElementById('contador');
-
-  // Data inicial: 01/02/2025 00:00 (formato dd/mm/yyyy)
-  const dataInicial = new Date(2025, 1, 1, 0, 0, 0); // meses começam em 0 (0=jan,1=fev)
+  const dataInicial = new Date(2025, 1, 1, 0, 0, 0);
 
   function atualizarContador() {
     const agora = new Date();
-    let diff = agora - dataInicial; // diferença em ms
+    let diff = agora - dataInicial;
 
     if(diff < 0) {
       contador.textContent = "Ainda não chegou a hora...";
       return;
     }
 
-    // Calcula dias, horas, minutos, segundos
     const segundos = Math.floor(diff / 1000) % 60;
     const minutos = Math.floor(diff / (1000 * 60)) % 60;
     const horas = Math.floor(diff / (1000 * 60 * 60)) % 24;
     const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-    // Formata com zeros à esquerda
-    const formato = `${dias}d ${String(horas).padStart(2,'0')}h ${String(minutos).padStart(2,'0')}m ${String(segundos).padStart(2,'0')}s`;
-
-    contador.innerHTML = `Fazem <strong>${formato}</strong> que sou o homem mais feliz do universo.`;
+    contador.innerHTML = `Fazem <strong>${dias}d ${String(horas).padStart(2,'0')}h ${String(minutos).padStart(2,'0')}m ${String(segundos).padStart(2,'0')}s</strong> que sou o homem mais feliz do universo.`;
   }
 
   atualizarContador();
